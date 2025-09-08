@@ -96,12 +96,7 @@ const CustomTooltip = ({ active, label, payload }) => {
 };
 
 export default function WeeklyChartPro({ rows }) {
-  const people = useMemo(() => {
-    const set = new Set(rows.map((r) => r[C.name]).filter(Boolean));
-    return ["All", ...set];
-  }, [rows]);
-
-  const [person, setPerson] = useState("All");
+  const [person] = useState("All");
   const [show, setShow] = useState({
     swim: true,
     gym: true,
@@ -109,6 +104,8 @@ export default function WeeklyChartPro({ rows }) {
     feeling: true,
   });
   const data = useMemo(() => buildChartData(rows, person), [rows, person]);
+
+  console.log(data);
 
   return (
     <div
@@ -120,7 +117,6 @@ export default function WeeklyChartPro({ rows }) {
         boxShadow: "0 10px 30px rgba(0,0,0,.06)",
       }}
     >
-      {/* Панель управления */}
       <div
         style={{
           display: "flex",
@@ -130,24 +126,6 @@ export default function WeeklyChartPro({ rows }) {
           marginBottom: 12,
         }}
       >
-        <div style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
-          <span style={{ color: "#64748b" }}>Person:</span>
-          <select
-            value={person}
-            onChange={(e) => setPerson(e.target.value)}
-            style={{
-              padding: "6px 10px",
-              borderRadius: 8,
-              border: "1px solid #e2e8f0",
-            }}
-          >
-            {people.map((p) => (
-              <option key={p} value={p}>
-                {p}
-              </option>
-            ))}
-          </select>
-        </div>
         <div style={{ display: "inline-flex", gap: 8, flexWrap: "wrap" }}>
           <SeriesSwitch
             label="Swimming"
