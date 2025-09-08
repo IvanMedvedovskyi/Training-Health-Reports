@@ -1,9 +1,8 @@
 export default function DataTable({ rows, columns }) {
   if (!rows.length) return <div>No data</div>;
 
-  const nameColumn = "Ditt namn"; // колонка с именем
+  const nameColumn = "Ditt namn";
 
-  // группировка по имени
   const grouped = rows.reduce((acc, row) => {
     const name = row[nameColumn] || "Unknown";
     if (!acc[name]) acc[name] = [];
@@ -11,7 +10,6 @@ export default function DataTable({ rows, columns }) {
     return acc;
   }, {});
 
-  // вычисляем средние по каждому человеку
   const perPerson = Object.entries(grouped).map(([name, personRows]) => {
     const avg = {};
     columns.forEach((c) => {
@@ -25,7 +23,6 @@ export default function DataTable({ rows, columns }) {
     return { name, avg };
   });
 
-  // общее среднее по всей таблице
   const team = {};
   columns.forEach((c) => {
     const nums = rows.map((r) => Number(r[c])).filter((n) => !isNaN(n));
@@ -36,7 +33,6 @@ export default function DataTable({ rows, columns }) {
     }
   });
 
-  // таблица-рендер (чтобы не дублировать код)
   const renderTable = (data, getValue) => (
     <div
       style={{
