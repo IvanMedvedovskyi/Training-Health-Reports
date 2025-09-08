@@ -1,20 +1,23 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import { fetchCsv } from "../services/sheetService";
 import { parseCSV } from "../utils/parseCsv";
 
-// 1p0oudD17EuEHJJa9cgNNkpFZio-tNA5YyNFqJgJtbio - id in the url
+const SHEET_ID = "1p0oudD17EuEHJJa9cgNNkpFZio-tNA5YyNFqJgJtbio";
+const GID = "775762684";
 
-const DEFAULT_URL =
-  "/spreadsheets/d/1p0oudD17EuEHJJa9cgNNkpFZio-tNA5YyNFqJgJtbio/gviz/tq?tqx=out:csv&gid=775762684";
+const DEFAULT_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${GID}`;
 
 export function useSheet(csvUrl = DEFAULT_URL) {
   const [rows, setRows] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const controllerRef = useRef(null);
 
   const load = async (signal) => {
     try {
+      setLoading(true);
       setError(null);
+
       const csv = await fetchCsv(csvUrl, signal);
       setRows(parseCSV(csv));
     } catch (e) {
@@ -25,17 +28,18 @@ export function useSheet(csvUrl = DEFAULT_URL) {
       ) {
         return;
       }
-      setError(e.message ?? "Fetch error");
+      setError(e?.message || "Fetch error");
+      setRows([]);
     } finally {
       setLoading(false);
     }
   };
 
-  // первый запуск (при маунте)
   useEffect(() => {
-    const controller = new AbortController();
-    load(controller.signal);
-    return () => controller.abort();
+    controllerRef.current?.abort();
+    controllerRef.current = new AbortController();
+    load(controllerRef.current.signal);
+    return () => controllerRef.current?.abort();
   }, [csvUrl]);
 
   const columns = useMemo(
@@ -43,6 +47,11 @@ export function useSheet(csvUrl = DEFAULT_URL) {
     [rows]
   );
 
-  // теперь reload вызывается только вручную
-  return { rows, columns, loading, error, reload: () => load() };
+  const reload = () => {
+    controllerRef.current?.abort();
+    controllerRef.current = new AbortController();
+    load(controllerRef.current.signal);
+  };
+
+  return { rows, columns, loading, error, reload };
 }
