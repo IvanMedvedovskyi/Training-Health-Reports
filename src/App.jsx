@@ -25,7 +25,7 @@ export default function App() {
     >
       <h1>Weekly Report — Training & Health</h1>
       <p style={{ color: "#666" }}>
-        Live data from Google Sheets (CSV publish + polling)
+        Live data from Google Sheets (CSV publish)
       </p>
 
       <Toolbar onRefresh={reload} search={search} onSearch={setSearch} />
