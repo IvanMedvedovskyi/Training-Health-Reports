@@ -5,7 +5,7 @@ import { parseCSV } from "../utils/parseCsv";
 // 1p0oudD17EuEHJJa9cgNNkpFZio-tNA5YyNFqJgJtbio - id in the url
 
 const DEFAULT_URL =
-  "https://docs.google.com/spreadsheets/d/1p0oudD17EuEHJJa9cgNNkpFZio-tNA5YyNFqJgJtbio/gviz/tq?tqx=out:csv&gid=775762684";
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vSIyZyXybL0_w-nfhDfbaWA0gv1Y0fay1hLGY39vzzxTSGuHsxg0JKeh8_9i_Ev61Eu1K30f53cgkh1/pub?output=csv";
 
 export function useSheet(csvUrl = DEFAULT_URL) {
   const [rows, setRows] = useState([]);
