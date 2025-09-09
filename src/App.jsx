@@ -1,3 +1,4 @@
+// App.jsx
 import { useEffect, useMemo, useState } from "react";
 import { useSheet } from "./hooks/useSheet";
 import Spinner from "./components/Spinner";
@@ -20,8 +21,11 @@ export default function App() {
   }, [columns]);
 
   const filteredRows = useMemo(() => {
+    const isAdmin = (userName || "").trim().toLowerCase() === "admin";
     return rows.filter((row) => {
-      const nameMatch = userName
+      const nameMatch = isAdmin
+        ? true
+        : userName
         ? (row["Ditt namn"] || "").toLowerCase() === userName.toLowerCase()
         : true;
       const searchMatch = (row["Ditt namn"] || "")
@@ -48,12 +52,19 @@ export default function App() {
     return <FullscreenNameGate rows={rows} onSubmit={setUserName} />;
   }
 
+  const isAdmin = (userName || "").trim().toLowerCase() === "admin";
+
   return (
     <div style={{ padding: 16, maxWidth: 1400, margin: "0 auto" }}>
       <h1>Weekly Report — Training & Health</h1>
 
       <p style={{ marginBottom: 8 }}>
         <strong>Name:</strong> {userName}
+        {isAdmin && (
+          <span style={{ marginLeft: 8, color: "#10b981", fontWeight: 600 }}>
+            (Admin mode — all data)
+          </span>
+        )}
         <button
           style={{
             background: "#2563eb",

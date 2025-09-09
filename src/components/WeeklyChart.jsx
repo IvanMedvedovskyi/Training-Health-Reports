@@ -105,8 +105,6 @@ export default function WeeklyChartPro({ rows }) {
   });
   const data = useMemo(() => buildChartData(rows, person), [rows, person]);
 
-  console.log(data);
-
   return (
     <div
       style={{
