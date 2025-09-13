@@ -1,10 +1,10 @@
 const NUMERIC_COLUMNS = [
-  "Hur många simträningar har du haft denna vecka?",
+  "Hur många simträningar har du gjort denna vecka?",
+  "Hur många tävlingsdagar har du gjort denna vecka?",
   "Hur många gympass har du gjort denna vecka?",
-  "Hur många tävlingsdagar har du haft denna vecka?",
-  "Hur många ”övriga” träningspass har du haft denna vecka?",
-  "Hur många dagar har du varit sjuk denna vecka?",
-  "Hur tycker du att simträningen har gått denna vecka?",
+  'Hur många "övriga" pass har du gjort denna vecka?',
+  'Hur många "dagar har du vart sjuk denna vecka (sjuk=ej tillräcklig frisk för att träna)?',
+  "Hur tycker du att simträningen gått denna vecka?",
 ];
 
 export function calculateAverages(rows) {
@@ -12,9 +12,8 @@ export function calculateAverages(rows) {
 
   const grouped = {};
 
-  // группируем строки по имени
   rows.forEach((row) => {
-    const name = row["Ditt namn"] || "Unknown";
+    const name = row["Namn"] || "Unknown";
     if (!grouped[name]) grouped[name] = [];
     grouped[name].push(row);
   });

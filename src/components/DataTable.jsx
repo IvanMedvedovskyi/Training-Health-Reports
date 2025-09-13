@@ -1,7 +1,7 @@
 export default function DataTable({ rows, columns }) {
   if (!rows.length) return <div>No data</div>;
 
-  const nameColumn = "Ditt namn";
+  const nameColumn = "Namn";
 
   const grouped = rows.reduce((acc, row) => {
     const name = row[nameColumn] || "Unknown";

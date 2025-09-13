@@ -26,9 +26,9 @@ export default function App() {
       const nameMatch = isAdmin
         ? true
         : userName
-        ? (row["Ditt namn"] || "").toLowerCase() === userName.toLowerCase()
+        ? (row["Namn"] || "").toLowerCase() === userName.toLowerCase()
         : true;
-      const searchMatch = (row["Ditt namn"] || "")
+      const searchMatch = (row["Namn"] || "")
         .toLowerCase()
         .includes(search.toLowerCase());
       return nameMatch && searchMatch;

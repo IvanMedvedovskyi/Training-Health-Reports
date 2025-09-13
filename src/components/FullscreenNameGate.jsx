@@ -19,7 +19,7 @@ export function FullscreenNameGate({ rows, onSubmit }) {
 
     const exists = rows.some(
       (row) =>
-        (row["Ditt namn"] || "").trim().toLowerCase().replace(/\s+/g, " ") ===
+        (row["Namn"] || "").trim().toLowerCase().replace(/\s+/g, " ") ===
         normalized
     );
 

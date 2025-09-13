@@ -1,4 +1,4 @@
-export function buildAverages(rows, columns, nameColumn = "Ditt namn") {
+export function buildAverages(rows, columns, nameColumn = "Namn") {
   const grouped = rows.reduce((acc, row) => {
     const name = row[nameColumn] || "Unknown";
     (acc[name] ||= []).push(row);

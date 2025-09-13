@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { fetchCsv } from "../services/sheetService";
 import { parseCSV } from "../utils/parseCsv";
 
-const SHEET_ID = "1p0oudD17EuEHJJa9cgNNkpFZio-tNA5YyNFqJgJtbio";
-const GID = "775762684";
+const SHEET_ID = "1RFyCnS4Lvc78N0xMo_yPLNOIvFhEjcgBTgJbN1ERU8c";
+const GID = "985587047";
 const DEFAULT_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${GID}`;
 
 const isEmptyCell = (v) =>
